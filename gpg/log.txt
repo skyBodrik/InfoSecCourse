@@ -1,0 +1,147 @@
+artyom@artyom-H97-D3H:~/Projects/InfoSecCourse/gpg$ gpg2 --list-keys
+artyom@artyom-H97-D3H:~/Projects/InfoSecCourse/gpg$ gpg2 --gen-key
+gpg (GnuPG) 2.0.28; Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Выберите тип ключа:
+   (1) RSA и RSA (по умолчанию)
+   (2) DSA и Elgamal
+   (3) DSA (только для подписи)
+   (4) RSA (только для подписи)
+Ваш выбор? 1
+длина ключей RSA может быть от 1024 до 4096 бит.
+Какой размер ключа Вам необходим? (2048) 
+Запрошенный размер ключа - 2048 бит
+Выберите срок действия ключа.
+         0 = без ограничения срока действия
+      <n>  = срок действия ключа - n дней
+      <n>w = срок действия ключа - n недель
+      <n>m = срок действия ключа - n месяцев
+      <n>y = срок действия ключа - n лет
+Срок действия ключа? (0) 2y
+Ключ действителен до Ср. 28 марта 2018 00:55:57 MSK
+Все верно? (y/N) y
+
+GnuPG необходимо составить ID пользователя в качестве идентификатора ключа.
+
+Ваше настоящее имя: Artyom Aleksyuk
+Адрес электронной почты: artyom.h31@gmail.com
+Комментарий: 
+Вы выбрали следующий ID пользователя:
+    "Artyom Aleksyuk <artyom.h31@gmail.com>"
+
+Сменить (N)Имя, (C)Комментарий, (E)Адрес или (O)Принять/(Q)Выход? O
+Для защиты закрытого ключа необходима фраза-пароль.
+
+
+(process:22404): GLib-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./glib/gmem.c:482: custom memory allocation vtable not supported
+
+(process:22412): GLib-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./glib/gmem.c:482: custom memory allocation vtable not supported
+Необходимо получить много случайных чисел. Желательно, чтобы Вы
+в процессе генерации выполняли какие-то другие действия (печать
+на клавиатуре, движения мыши, обращения к дискам); это даст генератору
+случайных чисел больше возможностей получить достаточное количество энтропии.
+Необходимо получить много случайных чисел. Желательно, чтобы Вы
+в процессе генерации выполняли какие-то другие действия (печать
+на клавиатуре, движения мыши, обращения к дискам); это даст генератору
+случайных чисел больше возможностей получить достаточное количество энтропии.
+gpg: ключ 92682E10 помечен как абсолютно доверенный.
+открытый и закрытый ключи созданы и подписаны.
+
+gpg: проверка таблицы доверия
+gpg: требуется 3 с ограниченным доверием, 1 с полным, модель доверия PGP
+gpg: глубина: 0  верных:   1  подписанных:   0  доверие: 0-, 0q, 0n, 0m, 0f, 1u
+gpg: срок следующей проверки таблицы доверия 2018-03-27
+pub   2048R/92682E10 2016-03-27 [годен до: 2018-03-27]
+      Отпечаток ключа = 3642 F44F 0375 4B21 A4A1  F188 2704 20BB 9268 2E10
+uid     [абсолютное] Artyom Aleksyuk <artyom.h31@gmail.com>
+sub   2048R/9AAC34E0 2016-03-27 [годен до: 2018-03-27]
+artyom@artyom-H97-D3H:~/Projects/InfoSecCourse/gpg$ gpg2 --list-keys
+/home/artyom/.gnupg/pubring.gpg
+-------------------------------
+pub   2048R/92682E10 2016-03-27 [годен до: 2018-03-27]
+uid     [абсолютное] Artyom Aleksyuk <artyom.h31@gmail.com>
+sub   2048R/9AAC34E0 2016-03-27 [годен до: 2018-03-27]
+
+
+artyom@artyom-H97-D3H:~/Projects/InfoSecCourse/gpg$ gpg2 --export --armor 92682E10
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2
+
+mQENBFb4VzkBCAC+Awq04vd+H6V6d5KLcqQUr79GwcsULuyyMDR3J0cP129AVOXN
+8cSYKVMCEIze39TZonC26K0Du8F6+Z8RB8lFaVwAQITjknUQcgD8btZ0U7s/L3Ex
+wfoRuM6tRnNjsqUGtCTaxKl4QqS3GgL9YFiyvhFkPvSanvrGXDUbeUWXPXf9FiPx
+ZySVaUEUrJNVojS2fLt9rjVEkOpKZXV7jO9DhSGEMCZO1mWsmqFmzhUet4Ps+S+9
+cD3RRKP1bXkdYk55XUZGhBXyGjZmPqJBInaEcHXzY1UjT4X8e2r8wXfRgmBXamtk
+EnPoZBuR1rjOJqx3wx72E4HlzxXVBaS4iQmBABEBAAG0JkFydHlvbSBBbGVrc3l1
+ayA8YXJ0eW9tLmgzMUBnbWFpbC5jb20+iQE/BBMBCAApBQJW+Fc5AhsDBQkDwmcA
+BwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQJwQgu5JoLhAHxAf+McDzYvRY
+q0FP2YY+V2oT2yQIYOFBVsVgm+EgzYVE/R7HX0OIdgQGl2Fp0ew2feMbYClCgn/D
+lGrCSlo0i0OkEIhKLbMf9kKGtRnD8DokomTFiKnO4avpud2qpWjtmVome9nfwfPP
+quaxGleZSTiy9EyZVN5A+hZx2wDNelH5sGpX75INPTTYui56TWHvWO4Zeb1Oz0wd
+JZHaHuLZIbVHA4fBDPHHTb68oii3fJb4TUQP/5C6vCqpiSBzkqQuNbU8DBxVEMcj
+4NMhmNCjL2/CqThiPsc2TtXt6csF9cSaCIha/diaL11RwWLowd8MtMkMEi/+wMMY
+NfU2KqDALQb/z7kBDQRW+Fc5AQgA5tr3+3EoX/iE1BevBh8VeLGzuE+kuDq65qNp
+chniDjjzLJYnW4uEz15htgCgAV3u1fHL+ldwghTjSKguynEx8b6iMgo/fb06soCa
+L7P68gxekEVX/xV5wznLXGn7rUZ8nMjUOqwz2ZBtqXjmq1evlG3q2QxyuGIBEHMU
+Bj96FLhZ8IqpDplSkbTcx/14S/P5NtSWKIK1b3WyhLrDwT6hzVcihYa2gwpezdXv
+SzVMgUszsYqhQ9Z9SLeLb8TBB8RCo2/OiXUPIS0e9AyJYfrYRVo86VSezJ1oI2x0
+yo8HbENtcZhB0dVtuv6WoCxYTgh90uKpVjnl9eIKWZPZLAqGSQARAQABiQElBBgB
+CAAPBQJW+Fc5AhsMBQkDwmcAAAoJECcEILuSaC4QEWEH/jRMwgobAEayBX6JoYc+
+YNjAGTAZh8TPZ+/m2C11Gf03mc9kI5KYs8ZxfZeAc1RBs27tWB8mZhGf3QWKrCkp
+x/nPlPTt3RimBsn8KvqDiLjIPyLwfDLDchmAa+XoxshFUru0v0TsQp0PALv34GDQ
+hJCXIPpoDvIR8sfKGS6LPoGVXGkqO0sOmN8hObx2ff0CM2fEQk8BMcUYtKi4DbV3
+IENuHfAs/CcF0hUsu82ITJnE18g8H8P5hUZY1MDzJUPYksvoERKJntDr8Ga1ohEL
+HkwasqppNY/E3rF+QCOOEAm7DXxtFG8l7N0gY006//QPS3eYMDxdmmZQUQKmDdFj
+Mio=
+=4iUZ
+-----END PGP PUBLIC KEY BLOCK-----
+artyom@artyom-H97-D3H:~/Projects/InfoSecCourse/gpg$ echo "Do you really expect to find a secret here?" > secret.txt
+artyom@artyom-H97-D3H:~/Projects/InfoSecCourse/gpg$ gpg2 --import ~/Downloads/F968C255C4923EDEF1ED6F6F073052F3C8DFD64C.asc 
+gpg: ключ C8DFD64C: импортирован открытый ключ "Artyom Aleksyuk <artyom.h31@gmail.com>"
+gpg: Всего обработано: 1
+gpg:               импортировано: 1  (RSA: 1)
+artyom@artyom-H97-D3H:~/Projects/InfoSecCourse/gpg$ gpg2 --list-keys
+/home/artyom/.gnupg/pubring.gpg
+-------------------------------
+pub   2048R/92682E10 2016-03-27 [годен до: 2018-03-27]
+uid     [абсолютное] Artyom Aleksyuk <artyom.h31@gmail.com>
+sub   2048R/9AAC34E0 2016-03-27 [годен до: 2018-03-27]
+
+pub   2048R/C8DFD64C 2016-03-27 [годен до: 2018-03-28]
+uid     [неизвестно] Artyom Aleksyuk <artyom.h31@gmail.com>
+sub   2048R/72C1CBCB 2016-03-27 [годен до: 2018-03-28]
+
+
+
+artyom@artyom-H97-D3H:~/Projects/InfoSecCourse/gpg$ gpg2 --armor --encrypt secret.txt 
+Не задан ID пользователя (можно использовать "-r").
+
+Текущие получатели:
+
+Введите ID пользователя. Пустая строка для завершения: C8DFD64C
+gpg: 72C1CBCB: Нет свидетельств того, что данный ключ принадлежит названному пользователю
+
+pub  2048R/72C1CBCB 2016-03-27 Artyom Aleksyuk <artyom.h31@gmail.com>
+ Отпечаток главного ключа: F968 C255 C492 3EDE F1ED  6F6F 0730 52F3 C8DF D64C
+      Отпечаток подключа: 93B0 41C2 D4F3 17DC 0E25  3252 9D78 21E7 72C1 CBCB
+
+Нет уверенности в том, что ключ принадлежит человеку, указанному
+в ID пользователя ключа. Если Вы ТОЧНО знаете, что делаете,
+можете ответить на следующий вопрос утвердительно.
+
+Все равно использовать данный ключ? (y/N) y
+
+Текущие получатели:
+2048R/72C1CBCB 2016-03-27 "Artyom Aleksyuk <artyom.h31@gmail.com>"
+
+Введите ID пользователя. Пустая строка для завершения: 
+artyom@artyom-H97-D3H:~/Projects/InfoSecCourse/gpg$ ls
+log.txt  report.tex  secret.txt  secret.txt.asc
+
+
+
+artyom@gpg:~$ cat enc.txt.out 
+Do you really expect to find a secret here?
+

